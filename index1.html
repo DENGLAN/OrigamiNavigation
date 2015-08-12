@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CSS3点击题目展开折纸形式导航</title>
+<style>
+@-webkit-keyframes open
+{
+	0%
+	{
+		-webkit-transform:rotateX(-120deg);
+	}
+	25%
+	{
+		-webkit-transform:rotateX(30deg);
+	}
+	50%
+	{
+		-webkit-transform:rotateX(-15deg);
+	}
+	75%
+	{
+		-webkit-transform:rotateX(8deg);
+	}
+	100%
+	{
+		-webkit-transform:rotateX(0deg);
+	}
+}
+@-webkit-keyframes clos
+{
+	0%
+	{
+		-webkit-transform:rotateX(0deg);
+	}
+	100%
+	{
+		-webkit-transform:rotateX(-120deg);
+	}
+}
+body{margin:0;}
+#wrap{ width:160px;margin:30px auto; position:relative; -webkit-perspective:800px;}
+#wrap h2{ height:40px;background:#F60; color:#fff; font: bold 16px/40px "微软雅黑"; text-align:center;margin:0; position:relative;z-index:10;}
+#wrap div{ position:absolute;top:32px; width:100%;left:0; -webkit-transform-style:preserve-3d; -webkit-transform-origin:top;-webkit-transform:rotateX(-120deg);}
+#wrap span{ display:block;height:30px;background:#9F0; font:12px/30px "宋体"; color:#fff; text-indent:20px; box-shadow:inset 0 0 0 20px rgba(0,0,0,1); transition:1s;}
+#wrap>div{top:40px;}
+#wrap .show{-webkit-animation:2s open;-webkit-transform:rotateX(0deg);}
+#wrap .hide{-webkit-animation:0.8s clos;-webkit-transform:rotateX(-120deg);}
+#wrap .show>span{ box-shadow:inset 0 0 0 20px rgba(0,0,0,0);}
+.switch{display: inline-block;padding: 0 15px;line-height: 50px;color: #fff;
+    height: 50px;text-decoration: none;background-color: #000;margin: 600px 500px 0;}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<h2 id="btn">点击展开</h2>
+    <div>
+    	<span>选项1</span>
+        <div>
+        	<span>选项2</span>
+            <div>
+            	<span>选项3</span>
+                <div>
+                	<span>选项4</span>
+                    <div>
+                    	<span>选项5</span>
+                        <div>
+                        	<span>选项6</span>
+                            <div style="">
+                            	<span>选项7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="index.html" class="switch">点击我可以返回上一效果哦！</a>
+
+<script>
+var oBtn=document.getElementById("btn");
+var oWrap=document.getElementById("wrap");
+var aDiv=oWrap.getElementsByTagName("div");
+var iDelay=200;
+var oTimer=null;
+var i=0;
+var bOff=true;
+oBtn.onclick=function()
+{
+	if(oTimer)
+	{
+		return;
+	}
+	if(bOff)
+	{
+		i=0;
+		oTimer=setInterval(function(){
+			aDiv[i].className="show";
+			i++;
+			if(i==aDiv.length)
+			{
+				clearInterval(oTimer);
+				oTimer=null;
+				bOff=false;
+			}	
+		},iDelay);
+        oBtn.innerHTML="点击收缩";
+	}
+	else
+	{
+		i=aDiv.length-1;
+		oTimer=setInterval(function(){
+			aDiv[i].className="hide";
+			i--;
+			if(i<0)
+			{
+				clearInterval(oTimer);
+				bOff=true;
+				oTimer=null;
+			}	
+		},iDelay);
+        oBtn.innerHTML="点击展开";
+	}
+};
+</script>
+</body>
+</html>
